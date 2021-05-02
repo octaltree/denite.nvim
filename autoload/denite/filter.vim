@@ -124,11 +124,15 @@ function! s:new_floating_filter_buffer(context) abort
   let floating_border = a:context['floating_border'] !=# '' && has('nvim-0.5')
   let winrow = a:context['winrow']
   let wincol = a:context['wincol']
-  let row_below_denite_buffer = row + winheight(0) + (floating_border ? 1 : 0)
+  let row_below = row + winheight(0) + (floating_border ? 1 : 0)
+  let row_above = row - 1
+  let row_maybe_above =
+        \ a:context['filter_split_floating_direction'] ==# 'above'
+        \   && row_above >= 0 ? row_above: row_below
   if a:context['split'] ==# 'floating'
     let args = {
           \ 'relative': 'editor',
-          \ 'row': winrow == 1 ? 0 : row_below_denite_buffer,
+          \ 'row': winrow == 1 ? 0 : row_maybe_above,
           \ 'col': wincol,
           \ 'width': a:context['winwidth'],
           \ 'height': 1,
@@ -140,7 +144,7 @@ function! s:new_floating_filter_buffer(context) abort
   elseif a:context['filter_split_direction'] ==# 'floating'
     let args = {
           \ 'relative': 'editor',
-          \ 'row': row_below_denite_buffer,
+          \ 'row': row_maybe_above,
           \ 'col': win_screenpos(0)[1] - 1,
           \ 'width': winwidth(0),
           \ 'height': 1,
@@ -155,7 +159,7 @@ function! s:new_floating_filter_buffer(context) abort
     " so instead estimating it from floating buffer position.
     let args = {
           \ 'relative': 'editor',
-          \ 'row': on_start_filter ? row : row_below_denite_buffer,
+          \ 'row': on_start_filter ? row : row_maybe_above,
           \ 'col': on_start_filter ? nvim_win_get_config(0)['col']
           \ : win_screenpos(0)[1] - 1,
           \ 'width': winwidth(0),
