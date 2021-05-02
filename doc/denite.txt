@@ -736,6 +736,23 @@ OPTIONS							*denite-options*
 
 		Default: "botright"
 
+					*denite-option-filter-split-floating-direction*
+-filter-split-floating-direction={direction}
+		When the filter buffer uses floating, specify whether it should be
+		positioned above or below the denite buffer.
+
+		If {direction} is "above" and there is space to display the filter buffer,
+		it will be displayed above the denite buffer.
+		Otherwise, it will be displayed "below".
+
+		See also the |denite-option-filter-split-floating-direction|,
+		if you don't use a floating window for the filter buffer.
+
+		Note: To use "floating", you need to use neovim
+		0.4.0+(|nvim_open_win()|).
+
+		Default: "below"
+
 					*denite-option-filter-updatetime*
 -filter-updatetime={time}
 		Specify the update time in the Denite filter window.

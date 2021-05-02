@@ -108,6 +108,7 @@ function! denite#init#_user_options() abort
         \ 'empty': v:true,
         \ 'expand': v:false,
         \ 'filter_split_direction': 'botright',
+        \ 'filter_split_floating_direciton': 'below',
         \ 'filter_updatetime': 30,
         \ 'floating_border': '',
         \ 'floating_preview': v:false,
